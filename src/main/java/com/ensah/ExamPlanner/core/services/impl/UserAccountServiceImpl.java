@@ -2,12 +2,12 @@ package com.ensah.ExamPlanner.core.services.impl;
 
 import com.ensah.ExamPlanner.core.bo.Role;
 import com.ensah.ExamPlanner.core.bo.UserAccount;
-import com.ensah.ExamPlanner.core.bo.Personnel;
-import com.ensah.ExamPlanner.core.dao.IEnseignantRepository;
+import com.ensah.ExamPlanner.core.bo.Personne;
+import com.ensah.ExamPlanner.core.dao.IPersonneRepository;
 import com.ensah.ExamPlanner.core.dao.IRoleRepository;
 import com.ensah.ExamPlanner.core.dao.IUserAccountDao;
 import com.ensah.ExamPlanner.core.services.IUserAccountservice;
-//import org.passay.*;
+import org.passay.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class UserAccountServiceImpl implements IUserAccountservice {
 	private IRoleRepository roleDao;
 
 	@Autowired
-	private IEnseignantRepository personDao;
+	private IPersonneRepository personDao;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -50,7 +50,7 @@ public class UserAccountServiceImpl implements IUserAccountservice {
 		userAccount.setRole(roleDao.findById(idRole).get());
 
 		// récupérer la personne de la base de données
-		Personnel person = personDao.findById(idPerson).get();
+		Personne person = personDao.findById(idPerson).get();
 
 		// determiner la personne
 		userAccount.setProprietaire(person);

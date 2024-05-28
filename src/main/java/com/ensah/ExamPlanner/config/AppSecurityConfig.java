@@ -60,7 +60,8 @@ public class AppSecurityConfig {
         // TODO : Configurer la securité de votre application
 
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authz -> authz.requestMatchers("/user/**").hasRole("USER")
+            .authorizeHttpRequests(authz -> authz
+                // .requestMatchers("/user/**").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
             )

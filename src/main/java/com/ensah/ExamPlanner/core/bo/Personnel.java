@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_personnel", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorColumn(name = "PERSONNEL_TYPE", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("P")
 public class Personnel {
 
 	@Id
@@ -17,6 +18,19 @@ public class Personnel {
 
 	//	@OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL, targetEntity = UserAccount.class)
 	//	private Set<UserAccount> comptes;
+
+	public Personnel() {}
+
+	public Personnel(String nom, String prenom) {
+		this.nom = nom;
+		this.prenom = prenom;
+	}
+
+	public Personnel(Long idPersonnel, String nom, String prenom) {
+		this.idPersonnel = idPersonnel;
+		this.nom = nom;
+		this.prenom = prenom;
+	}
 
 	public Long getIdPersonnel() {
 		return idPersonnel;
@@ -40,5 +54,14 @@ public class Personnel {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	@Override
+	public String toString() {
+		return "Personnel{" +
+				"idPersonnel=" + idPersonnel +
+				", nom='" + nom + '\'' +
+				", prenom='" + prenom + '\'' +
+				'}';
 	}
 }

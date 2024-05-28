@@ -25,13 +25,13 @@ public class UserAccount {
 	@Transient
 	private String rawPassword;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "idRole")
 	private Role role;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "idUtilisateur")
-	private Personnel proprietaire;
+	private Personne proprietaire;
 
 	public Long getIdCompte() {
 		return idCompte;
@@ -105,12 +105,11 @@ public class UserAccount {
 		this.role = role;
 	}
 
-	public Personnel getProprietaire() {
+	public Personne getProprietaire() {
 		return proprietaire;
 	}
 
-	public void setProprietaire(Personnel proprietaire) {
+	public void setProprietaire(Personne proprietaire) {
 		this.proprietaire = proprietaire;
 	}
-
 }

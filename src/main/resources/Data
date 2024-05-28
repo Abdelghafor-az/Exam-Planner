@@ -1,0 +1,14 @@
+-- INSERT ADMIN PERSON
+INSERT INTO personne (nom, prenom) VALUES ('app', 'admin');
+
+-- INSERT PERSONNELS
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('E', 'RAG', 'Abdelghafor');
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('A', 'Boudaa', 'Tarik');
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('E', 'Mota', 'Hamza');
+
+-- INSERT ROLES
+INSERT INTO `role` (`idRole`, `nomRole`) VALUES (1, 'ROLE_ADMIN');
+
+-- INSERT USERACCOUNT
+INSERT INTO `useraccount` (`accountNonExpired`, `accountNonLocked`, `credentialsNonExpired`, `enabled`, `idCompte`, `idRole`, `idUtilisateur`, `login`, `password`) VALUES
+(b'1', b'1', b'1', b'1', 1, 1, 1, 'admin', '{bcrypt}$2a$10$vsjRwUSUi2B/jlw4ATXEN.B2IIcVY8ourImFZnWcW1tLz3G6mLfpe');
