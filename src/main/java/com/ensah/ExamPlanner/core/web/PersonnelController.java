@@ -82,17 +82,23 @@ public class PersonnelController {
 		return "admin/form";
 	}
 
-	@GetMapping("/updatePersonnel/{idPersonnel}")
-	public String updateContactForm(@PathVariable("idPersonnel") Long idPersonnel, Model model) {
+	@GetMapping("/updatePersonnel/{type}/{idPersonnel}")
+	public String updateContactForm(@PathVariable("idPersonnel") Long idPersonnel,
+									@PathVariable("type") Character type, Model model) {
 		Personnel personnel = personnelService.getPersonnelById(idPersonnel);
 		model.addAttribute("personnelModel", personnel);
-		model.addAttribute("action", "updatePersonnel");
+		if (type == 'E') {
+			model.addAttribute("action", "updateEnseignant");
+		} else if (type == 'A') {
+			model.addAttribute("action", "updateAdministrateur");
+		}
 		model.addAttribute("showForm", true);
 		model.addAttribute("personnelList", personnelService.getAllPersonnels());
 
 		return "admin/form";
 	}
 
+	/*
 	@PostMapping("/updatePersonnel")
 	public String updatePersonnel(@Valid @ModelAttribute("personnelModel") Personnel personnel, BindingResult bindingResult,
 			Model model) {
@@ -102,21 +108,14 @@ public class PersonnelController {
 			model.addAttribute("showForm", true);
 			model.addAttribute("errorMsg", "Les données sont invalides.");
 		} else {
-			System.out.println("before---------\n");
-			Enseignant enseignant = new Enseignant(
-					personnel.getIdPersonnel(),
-					personnel.getNom(),
-					personnel.getPrenom()
-			);
-			enseignantService.updateEnseignant(enseignant);
-			// personnelService.updatePersonnel(personnel);
-			System.out.println("\nafter---------\n");
+			personnelService.updatePersonnel(personnel);
 			model.addAttribute("infoMsg", "Personnel modifié avec succès");
 		}
 		model.addAttribute("personnelList", personnelService.getAllPersonnels());
 
 		return "admin/form";
 	}
+	*/
 
 	@PostMapping("/updateEnseignant")
 	public String updateEnseignat(@Valid @ModelAttribute("personnelModel") Enseignant enseignant, BindingResult bindingResult,
@@ -127,9 +126,11 @@ public class PersonnelController {
 			model.addAttribute("errorMsg", "Les données sont invalides.");
 		} else {
 			enseignantService.updateEnseignant(enseignant);
-			model.addAttribute("infoMsg", "Personnel modifié avec succès");
+			model.addAttribute("infoMsg", "Enseignant modifié avec succès");
 		}
-		model.addAttribute("personnelList", personnelService.getAllPersonnels());
+		// model.addAttribute("personnelList", personnelService.getAllPersonnels());
+		model.addAttribute("enseignantList", enseignantService.getAllEnseignants());
+		model.addAttribute("administrateurList", administrateurService.getAllAdministrateurs());
 
 		return "admin/form";
 	}
@@ -143,9 +144,11 @@ public class PersonnelController {
 			model.addAttribute("errorMsg", "Les données sont invalides.");
 		} else {
 			administrateurService.updateAdministrateur(administrateur);
-			model.addAttribute("infoMsg", "Personnel modifié avec succès");
+			model.addAttribute("infoMsg", "Administrateur modifié avec succès");
 		}
-		model.addAttribute("personnelList", personnelService.getAllPersonnels());
+		//model.addAttribute("personnelList", personnelService.getAllPersonnels());
+		model.addAttribute("enseignantList", enseignantService.getAllEnseignants());
+		model.addAttribute("administrateurList", administrateurService.getAllAdministrateurs());
 
 		return "admin/form";
 	}

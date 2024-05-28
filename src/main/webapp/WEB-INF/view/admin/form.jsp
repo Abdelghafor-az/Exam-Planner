@@ -137,8 +137,8 @@ form {
 						<td><c:out value="Enseignant" /></td>
 						<td>
 							<ul>
-								<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-								<li><a href="updatePersonnel/${p.idPersonnel}">Update</a></li>
+								<li><a href="deletePersonnel/E/${p.idPersonnel}">Delete</a></li>
+								<li><a href="updatePersonnel/E/${p.idPersonnel}">Update</a></li>
 							</ul>
 						</td>
 					</tr>
@@ -150,8 +150,8 @@ form {
 						<td><c:out value="Administrateur" /></td>
 						<td>
 							<ul>
-								<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-								<li><a href="updatePersonnel/${p.idPersonnel}">Update</a></li>
+								<li><a href="deletePersonnel/A/${p.idPersonnel}">Delete</a></li>
+								<li><a href="updatePersonnel/A/${p.idPersonnel}">Update</a></li>
 							</ul>
 						</td>
 					</tr>
