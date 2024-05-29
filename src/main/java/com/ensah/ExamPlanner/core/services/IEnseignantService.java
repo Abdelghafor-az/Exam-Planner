@@ -10,9 +10,11 @@ public interface IEnseignantService {
 
 	public void updateEnseignant(Enseignant pEnseignant);
 
-	public List<Enseignant> getAllEnseignants();
-
 	public void deleteEnseignant(Long id);
 
 	public Enseignant getEnseignantById(Long id);
+
+	public List<Enseignant> getEnseignantsByIds(List<Long> ids);
+
+	public List<Enseignant> getAllEnseignants();
 }

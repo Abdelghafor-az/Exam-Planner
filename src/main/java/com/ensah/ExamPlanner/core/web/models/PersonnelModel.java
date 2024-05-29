@@ -3,17 +3,29 @@ package com.ensah.ExamPlanner.core.web.models;
 
 public class PersonnelModel {
 
-    private Long id;
+    private Long idPersonnel;
+
     private String nom;
+
     private String prenom;
+
     private String type;
 
-    public Long getId() {
-        return id;
+    public PersonnelModel() {}
+
+    public PersonnelModel (Long idPersonnel, String nom, String prenom, String type) {
+        this.idPersonnel = idPersonnel;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.type = type;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getIdPersonnel() {
+        return idPersonnel;
+    }
+
+    public void setIdPersonnel(Long id) {
+        this.idPersonnel = id;
     }
 
     public String getNom() {

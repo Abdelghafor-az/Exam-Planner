@@ -14,9 +14,9 @@ public class Enseignant extends Personnel {
         super(firstName, lastName);
     }
 
-    public Enseignant(Long idEnseignant, String firstName, String lastName) {
-        super(idEnseignant, firstName, lastName);
-    }
+//    public Enseignant(Long idEnseignant, String firstName, String lastName) {
+//        super(idEnseignant, firstName, lastName);
+//    }
 
     @Override
     public String toString() {

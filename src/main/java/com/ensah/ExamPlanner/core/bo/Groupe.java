@@ -3,7 +3,7 @@ package com.ensah.ExamPlanner.core.bo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Groupe {
@@ -17,7 +17,7 @@ public class Groupe {
     private String nomGroupe;
 
     @OneToMany
-    private Set<Enseignant> enseignants;
+    private List<Enseignant> enseignants;
 
     public Long getIdGroupe() {
         return idGroupe;
@@ -35,11 +35,11 @@ public class Groupe {
         this.nomGroupe = nomGroupe;
     }
 
-    public Set<Enseignant> getEnseignants() {
+    public List<Enseignant> getEnseignants() {
         return enseignants;
     }
 
-    public void setEnseignants(Set<Enseignant> enseignants) {
+    public void setEnseignants(List<Enseignant> enseignants) {
         this.enseignants = enseignants;
     }
 }

@@ -16,8 +16,12 @@ public class EnseignantServiceImpl implements IEnseignantService {
 	@Autowired
 	private IEnseignantRepository enseignantDao;
 
-	public List<Enseignant> getAllEnseignants() {
-		return enseignantDao.findAll();
+	public void addEnseignant(Enseignant pEnseignant) {
+		enseignantDao.save(pEnseignant);
+	}
+
+	public void updateEnseignant(Enseignant pEnseignant) {
+		enseignantDao.save(pEnseignant);
 	}
 
 	public void deleteEnseignant(Long id) {
@@ -28,11 +32,11 @@ public class EnseignantServiceImpl implements IEnseignantService {
 		return enseignantDao.findById(id).get();
 	}
 
-	public void addEnseignant(Enseignant pEnseignant) {
-		enseignantDao.save(pEnseignant);
+	public List<Enseignant> getEnseignantsByIds(List<Long> ids) {
+		return enseignantDao.findAllById(ids);
 	}
 
-	public void updateEnseignant(Enseignant pEnseignant) {
-		enseignantDao.save(pEnseignant);
+	public List<Enseignant> getAllEnseignants() {
+		return enseignantDao.findAll();
 	}
 }
