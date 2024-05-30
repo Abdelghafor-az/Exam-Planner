@@ -16,7 +16,14 @@ public class Groupe {
     @Column(unique = true, nullable = false)
     private String nomGroupe;
 
-    @OneToMany
+     @OneToMany
+     @JoinColumn(name = "id_groupe")
+//    @ManyToMany
+//    @JoinTable(
+//            name = "groupe_enseignant",
+//            joinColumns = @JoinColumn(name = "groupe_id"),
+//            inverseJoinColumns = @JoinColumn(name = "enseignant_id")
+//    )
     private List<Enseignant> enseignants;
 
     public Long getIdGroupe() {

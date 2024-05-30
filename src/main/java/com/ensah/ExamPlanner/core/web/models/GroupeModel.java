@@ -4,9 +4,19 @@ import java.util.List;
 
 public class GroupeModel {
 
+    private Long idGroupe;
+
     private String nomGroupe;
 
     private List<Long> enseignants;
+
+    public Long getIdGroupe() {
+        return idGroupe;
+    }
+
+    public void setIdGroupe(Long idGroupe) {
+        this.idGroupe = idGroupe;
+    }
 
     public String getNomGroupe() {
         return nomGroupe;

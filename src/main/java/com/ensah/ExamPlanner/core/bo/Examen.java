@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Examen {
@@ -30,9 +31,9 @@ public class Examen {
 
     private Duration dureeReelle;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_examen_surveillance")
-    private Surveillance surveillance;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_examen")
+    private List<Surveillance> surveillances;
 
     @Transient
     private String AnneUniversitaire;
@@ -105,12 +106,12 @@ public class Examen {
         this.dureeReelle = dureeReelle;
     }
 
-    public Surveillance getSurveillance() {
-        return surveillance;
+    public List<Surveillance> getSurveillance() {
+        return surveillances;
     }
 
-    public void setSurveillance(Surveillance surveillance) {
-        this.surveillance = surveillance;
+    public void setSurveillance(List<Surveillance> surveillance) {
+        this.surveillances = surveillance;
     }
 
     public String getAnneUniversitaire() {
