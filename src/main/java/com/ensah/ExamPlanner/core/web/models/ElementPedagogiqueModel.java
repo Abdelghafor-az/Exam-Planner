@@ -7,14 +7,27 @@ public class ElementPedagogiqueModel {
     private Long idElement;
 
     @NotBlank
-    private String title;
+    private String titre;
+
+    private String type;
 
     private Long enseignant;
 
     private Long coordonnateur;
 
     // todo: maybe String representing the name
-    private Long niveau;
+    private String niveau;
+
+    public ElementPedagogiqueModel() {}
+
+    public ElementPedagogiqueModel(Long idElement, String titre, String type, Long enseignant, Long coordonnateur, String niveau) {
+        this.idElement = idElement;
+        this.titre = titre;
+        this.type = type;
+        this.enseignant = enseignant;
+        this.coordonnateur = coordonnateur;
+        this.niveau = niveau;
+    }
 
     public Long getIdElement() {
         return idElement;
@@ -24,12 +37,20 @@ public class ElementPedagogiqueModel {
         this.idElement = idElement;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getEnseignant() {
@@ -48,11 +69,11 @@ public class ElementPedagogiqueModel {
         this.coordonnateur = coordonnateur;
     }
 
-    public Long getNiveau() {
+    public String getNiveau() {
         return niveau;
     }
 
-    public void setNiveau(Long niveau) {
+    public void setNiveau(String niveau) {
         this.niveau = niveau;
     }
 }

@@ -5,7 +5,9 @@ INSERT INTO `useraccount` (`accountNonExpired`, `accountNonLocked`, `credentials
 
 INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES
 ('E', 'RAG', 'Abdelghafor'),
-('A', 'Boudaa', 'Tarik'),
+('A', 'Khalid', 'Aissam'),
+('E', 'Boudaa', 'Tarik'),
+('A', 'Alaoui', 'Taha'),
 ('E', 'Mota', 'Hamza');
 
 INSERT INTO niveau (nomNiveau) VALUES

@@ -214,9 +214,12 @@ public class PersonnelController {
 	@GetMapping("/updateGroupe/{idGroupe}")
 	public String updateGroupeForm(@PathVariable("idGroupe") Long idGroupe, Model model) {
 		Groupe groupe = groupeService.getGroupeById(idGroupe);
-		List<Long> groupeMembers = new ArrayList<Long>();
+
+		// Get groupe members
+		List<Long> groupeMembers = new ArrayList<>();
 		groupe.getEnseignants().forEach(enseignant ->
 				groupeMembers.add(enseignant.getIdPersonnel()));
+
 		// prepare the dto
 		GroupeModel groupeModel = new GroupeModel(
 				groupe.getIdGroupe(),
@@ -226,8 +229,9 @@ public class PersonnelController {
 		model.addAttribute("groupeModel", groupeModel);
 		model.addAttribute("action", "updateGroupe");
 		model.addAttribute("showGroupeForm", true);
-		model.addAttribute("groupeList", groupeService.getAllGroupes());
+//		model.addAttribute("groupeList", groupeService.getAllGroupes());
 		// TODO: test also passing groupeMembers (List<Long>)
+		initializeLists(model);
 
 		return "admin/form";
 	}

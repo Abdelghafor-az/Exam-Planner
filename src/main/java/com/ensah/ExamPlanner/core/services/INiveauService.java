@@ -8,6 +8,8 @@ public interface INiveauService {
 
 	public Niveau getNiveauById(Long id);
 
+	public Niveau getNiveauByNomNiveau(String nomNiveau);
+
 	public void addNiveau(Niveau pNiveau);
 
 	public void updateNiveau(Niveau pNiveau);

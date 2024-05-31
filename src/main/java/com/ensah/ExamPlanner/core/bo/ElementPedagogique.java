@@ -15,36 +15,38 @@ public class ElementPedagogique {
     @Column(unique = true, nullable = false)
     private String titre;
 
-    @Pattern(regexp = "^Element$|^Module$", message = "This field is required")
-    @Column(unique = true, nullable = false)
+    @NotBlank(message = "type: Element OR Module")
+    @Column(nullable = false)
     private String type;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_enseignant")
     private Enseignant enseignant;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_coordonnateur")
     private Enseignant coordonnateur;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_niveau")
     private Niveau niveau;
 
     public ElementPedagogique() {}
 
     // For addition (ID to be generated)
-    public ElementPedagogique(String titre, Enseignant enseignant, Enseignant coordonnateur, Niveau niveau) {
+    public ElementPedagogique(String titre, String type, Enseignant enseignant, Enseignant coordonnateur, Niveau niveau) {
         this.titre = titre;
+        this.type = type;
         this.enseignant = enseignant;
         this.coordonnateur = coordonnateur;
         this.niveau = niveau;
     }
 
     // For update
-    public ElementPedagogique(Long idElementPedagogique, String titre, Enseignant enseignant, Enseignant coordonnateur, Niveau niveau) {
+    public ElementPedagogique(Long idElementPedagogique, String type, String titre, Enseignant enseignant, Enseignant coordonnateur, Niveau niveau) {
         this.idElementPedagogique = idElementPedagogique;
         this.titre = titre;
+        this.type = type;
         this.enseignant = enseignant;
         this.coordonnateur = coordonnateur;
         this.niveau = niveau;

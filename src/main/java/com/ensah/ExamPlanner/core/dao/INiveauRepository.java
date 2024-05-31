@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface INiveauRepository extends JpaRepository<Niveau, Long> {
 
+    public Niveau getNiveauByNomNiveau(String nomNiveau);
 }

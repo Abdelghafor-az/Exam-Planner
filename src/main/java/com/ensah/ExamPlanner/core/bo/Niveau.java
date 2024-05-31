@@ -29,4 +29,12 @@ public class Niveau {
     public void setNomNiveau(String nomNiveau) {
         this.nomNiveau = nomNiveau;
     }
+
+    @Override
+    public String toString() {
+        return "Niveau{" +
+                "idNiveau=" + idNiveau +
+                ", nomNiveau='" + nomNiveau + '\'' +
+                '}';
+    }
 }

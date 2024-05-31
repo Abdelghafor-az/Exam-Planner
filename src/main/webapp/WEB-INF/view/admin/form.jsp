@@ -123,7 +123,7 @@
 						<c:if test="${action=='addPersonnel'}">
 							<div class="col">
 								<label>Role</label>
-								<f:select path="type" class="form-control" placeholder="Type">
+								<f:select path="type" class="form-control" placeholder="Role">
 									<f:option value="Enseignant">Enseignant</f:option>
 									<f:option value="Administrateur">Administrateur</f:option>
 								</f:select>
@@ -155,18 +155,6 @@
 						<div class="col">
 							<label>Enseignants</label>
 							<div>
-								<%-- if action=='addGroupe', then that's alright.
-								 But if action=='updateGroupe' then the passed groupModel is the
-								 groupe bo itself and it have all the information (his members),
-								 => groupModel.enseignants (is a non empthy list, where enseignats
-								 is List<Enseignants>, so the id and name, prenom is there)
-								 the problem is, in the addition stage, the groupe.enseignants
-								 suppose to raise error since the GroupeModel have enseignats as
-								 a list of ids.
-								 => So accessing
-								 objects don't have ens
-
-								 --%>
 								<select id="example-multiple-selected" name="enseignants" multiple="multiple">
 									<c:forEach items="${enseignantList}" var="e">
 										<c:choose>

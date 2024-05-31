@@ -16,16 +16,12 @@ public class NiveauServiceImpl implements INiveauService {
 	@Autowired
 	private INiveauRepository niveauDao;
 
-	public List<Niveau> getAllNiveaus() {
-		return niveauDao.findAll();
-	}
-
-	public void deleteNiveau(Long id) {
-		niveauDao.deleteById(id);
-	}
-
 	public Niveau getNiveauById(Long id) {
 		return niveauDao.findById(id).get();
+	}
+
+	public Niveau getNiveauByNomNiveau(String nomNiveau) {
+		return niveauDao.getNiveauByNomNiveau(nomNiveau);
 	}
 
 	public void addNiveau(Niveau pNiveau) {
@@ -35,4 +31,13 @@ public class NiveauServiceImpl implements INiveauService {
 	public void updateNiveau(Niveau pNiveau) {
 		niveauDao.save(pNiveau);
 	}
+
+	public void deleteNiveau(Long id) {
+		niveauDao.deleteById(id);
+	}
+
+	public List<Niveau> getAllNiveaus() {
+		return niveauDao.findAll();
+	}
+
 }

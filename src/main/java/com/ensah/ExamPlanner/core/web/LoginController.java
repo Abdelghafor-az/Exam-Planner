@@ -67,6 +67,6 @@ public class LoginController {
 
 		UserAndAccountInfos infoUser = getUserAccount();
 		m.addAttribute("userInfos", infoUser);
-		return "admin/form";
+		return "admin/form-exm";
 	}
 }

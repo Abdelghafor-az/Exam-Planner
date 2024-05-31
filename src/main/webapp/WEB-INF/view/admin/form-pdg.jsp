@@ -72,36 +72,75 @@
 					method="POST" modelAttribute="elementModel">
 
 					<div class="row">
-						<f:input path="idElementPedagogique" type="hidden" />
+						<f:input path="idElement" type="hidden" />
 						<div class="col">
 							<label>Element Pedagogique Title</label>
-							<f:input path="title" type="text" class="form-control"
+							<f:input path="titre" type="text" class="form-control"
 								placeholder="Title" />
-							<f:errors path="prenom" class="text-danger" />
+							<f:errors path="titre" class="text-danger" />
 						</div>
 
 						<div class="col">
 							<label>Type</label>
-							<f:input path="nom" type="text" class="form-control"
-								placeholder="Last Name" />
-							<f:errors path="nom" class="text-danger" />
+							<f:select path="type" class="form-control" placeholder="Type">
+								<f:option value="Module">Module</f:option>
+								<f:option value="Element">Element</f:option>
+							</f:select>
+							<f:errors path="type" class="text-danger" />
 						</div>
 
-						<c:if test="${action=='addPersonnel'}">
-							<div class="col">
-								<label>Type</label>
-								<f:select path="type" class="form-control" placeholder="Type">
-									<f:option value="Enseignant">Enseignant</f:option>
-									<f:option value="Administrateur">Administrateur</f:option>
-								</f:select>
-								<f:errors path="type" class="text-danger" />
-							</div>
-						</c:if>
+						<div class="col">
+							<label>Niveau</label>
+							<f:select path="niveau" class="form-control" placeholder="Niveau">
+								<f:option value="CP1">CP1</f:option>
+								<f:option value="CP2">CP2</f:option>
+								<f:option value="CI1">CI1</f:option>
+								<f:option value="CI2">CI2</f:option>
+								<f:option value="CI3">CI3</f:option>
+							</f:select>
+							<f:errors path="niveau" class="text-danger" />
+						</div>
 					</div>
 
-					<div class="text-right mt-3">
-						<button type="submit" class="btn btn-primary">Send</button>
-						<button type="reset" class="btn btn-secondary">Rest</button>
+					<div class="row mt-3">
+						<div class="col">
+							<label>Enseignant</label>
+							<f:select path="enseignant" class="form-control" placeholder="Niveau">
+								<c:forEach items="${enseignantList}" var="e">
+									<c:choose>
+										<c:when test="${elementModel.enseignant == e.idPersonnel}">
+											<f:option value="${e.idPersonnel}" selected="true"><c:out value="${e.prenom} ${e.nom}" /></f:option>
+										</c:when>
+										<c:otherwise>
+											<f:option value="${e.idPersonnel}"><c:out value="${e.prenom} ${e.nom}" /></f:option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</f:select>
+						</div>
+
+						<div class="col">
+							<label>Coordonnateur</label>
+							<f:select path="coordonnateur" class="form-control" placeholder="Niveau">
+								<c:forEach items="${enseignantList}" var="c">
+									<c:choose>
+										<c:when test="${elementModel.enseignant == c.idPersonnel}">
+											<f:option value="${c.idPersonnel}" selected="true"><c:out value="${c.prenom} ${c.nom}" /></f:option>
+										</c:when>
+										<c:otherwise>
+											<f:option value="${c.idPersonnel}"><c:out value="${c.prenom} ${c.nom}" /></f:option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</f:select>
+						</div>
+
+						<div class="col">
+							<div class="text-right mt-3">
+								<button type="submit" class="btn btn-primary">Send</button>
+								<button type="reset" class="btn btn-secondary">Rest</button>
+							</div>
+						</div>
 					</div>
 				</f:form>
 			</c:if>
@@ -111,37 +150,30 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">First Name</th>
-						<th scope="col">Last Name</th>
+						<th scope="col">Titre</th>
 						<th scope="col">Type</th>
+						<th scope="col">Enseignant</th>
+						<th scope="col">Coordonnateur</th>
+						<th scope="col">Niveau</th>
 					</tr>
 				</thead>
-<%--				<c:forEach items="${personnelList}" var="p">
+				<tbody>
+					<c:forEach items="${elementList}" var="el">
 						<tr>
-							<td><c:out value="${p.prenom}" /></td>
-							<td><c:out value="${p.nom}" /></td>
-							<td><c:out value="${p.type}" /></td>
+							<td><c:out value="${el.titre}" /></td>
+							<td><c:out value="${el.type}" /></td>
+							<td><c:out value="${el.enseignant.prenom} ${el.enseignant.nom}" /></td>
+							<td><c:out value="${el.coordonnateur.prenom} ${el.coordonnateur.nom}" /></td>
+							<td><c:out value="${el.niveau.nomNiveau}" /></td>
 							<td>
 								<ul>
-									<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-									<li><a href="updatePersonnel/${p.idPersonnel}">Update</a></li>
+									<li><a href="deleteElement/${el.idElementPedagogique}">Delete</a></li>
+									<li><a href="updateElement/${el.idElementPedagogique}">Update</a></li>
 								</ul>
 							</td>
 						</tr>
-					</c:forEach>--%>
-				<c:forEach items="${elementList}" var="el">
-					<tr>
-						<td><c:out value="${g.nomGroupe}" /></td>
-						<td><c:out value="-----" /></td>
-						<td><c:out value="Groupe" /></td>
-						<td>
-							<ul>
-								<li><a href="deleteGroupe/${el.idElement}">Delete</a></li>
-								<li><a href="updateGroupe/${el.idGroupe}">Update</a></li>
-							</ul>
-						</td>
-					</tr>
-				</c:forEach>
+					</c:forEach>
+				</tbody>
 			</table>
 		</div>
 		<div>Spring Web App by Tarik BOUDAA, National School of Applied
@@ -150,9 +182,8 @@
 	</div>
 	<!-- Initialize the plugin: -->
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#example-multiple-selected').multiselect();
-		});
+		$('#example-single').multiselect();
+		$('#example-single-selected').multiselect();
 	</script>
 </body>
 </html>
