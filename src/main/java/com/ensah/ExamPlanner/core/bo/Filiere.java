@@ -3,6 +3,8 @@ package com.ensah.ExamPlanner.core.bo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 @Entity
 public class Filiere {
 
@@ -12,7 +14,10 @@ public class Filiere {
 
     @NotBlank(message = "This field is required")
     @Column(unique = true, nullable = false)
-    private String nombreFiliere;
+    private String nomFiliere;
+
+    @OneToMany(mappedBy = "filiere")
+    private List<Enseignant> enseignants;
 
     public Long getIdFiliere() {
         return idFiliere;
@@ -23,10 +28,18 @@ public class Filiere {
     }
 
     public String getNombreFiliere() {
-        return nombreFiliere;
+        return nomFiliere;
     }
 
     public void setNombreFiliere(String nombreFiliere) {
-        this.nombreFiliere = nombreFiliere;
+        this.nomFiliere = nombreFiliere;
+    }
+
+    public List<Enseignant> getEnseignants() {
+        return enseignants;
+    }
+
+    public void setEnseignants(List<Enseignant> enseignants) {
+        this.enseignants = enseignants;
     }
 }

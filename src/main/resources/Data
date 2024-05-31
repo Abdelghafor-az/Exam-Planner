@@ -1,14 +1,26 @@
--- INSERT ADMIN PERSON
-INSERT INTO personne (nom, prenom) VALUES ('app', 'admin');
-
--- INSERT PERSONNELS
-INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('E', 'RAG', 'Abdelghafor');
-INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('A', 'Boudaa', 'Tarik');
-INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES ('E', 'Mota', 'Hamza');
-
--- INSERT ROLES
+INSERT INTO personne (username) VALUES ('admin');
 INSERT INTO `role` (`idRole`, `nomRole`) VALUES (1, 'ROLE_ADMIN');
-
--- INSERT USERACCOUNT
 INSERT INTO `useraccount` (`accountNonExpired`, `accountNonLocked`, `credentialsNonExpired`, `enabled`, `idCompte`, `idRole`, `idUtilisateur`, `login`, `password`) VALUES
 (b'1', b'1', b'1', b'1', 1, 1, 1, 'admin', '{bcrypt}$2a$10$vsjRwUSUi2B/jlw4ATXEN.B2IIcVY8ourImFZnWcW1tLz3G6mLfpe');
+
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES
+('E', 'RAG', 'Abdelghafor'),
+('A', 'Boudaa', 'Tarik'),
+('E', 'Mota', 'Hamza');
+
+INSERT INTO niveau (nomNiveau) VALUES
+('CP1'), ('CP2'), ('CI1'), ('CI2'), ('CI3');
+
+INSERT INTO departement (nomDepartement) VALUES
+('Mathématiques et Informatique'),
+('Génie Civil Energétique et Environnement');
+
+INSERT INTO filiere (nomFiliere) VALUES
+('CP1'), ('CP2'),
+('GC1'), ('GC2'), ('GC3'),
+('GI1'), ('GI2'), ('GI3'),
+('GEER1'), ('GEER2'), ('GEER3'),
+('GEE1'), ('GEE2'), ('GEE3'),
+('GM1'), ('GM2'), ('GM3'),
+('ID1'), ('ID2'), ('ID3'),
+('TDIA1'), ('TDIA2'), ('TDIA3');

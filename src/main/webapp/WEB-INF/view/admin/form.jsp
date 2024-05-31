@@ -6,7 +6,7 @@
 <html>
 	<head>
 	<title>Personnel Management</title>
-<%--	<link rel="stylesheet" href="/src/main/webapp/resources/css/custom.css" type="text/css">--%>
+	<link rel="stylesheet" href="/src/main/webapp/resources/css/custom.css" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
 	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
 	crossorigin="anonymous">
@@ -122,7 +122,7 @@
 
 						<c:if test="${action=='addPersonnel'}">
 							<div class="col">
-								<label>Type</label>
+								<label>Role</label>
 								<f:select path="type" class="form-control" placeholder="Type">
 									<f:option value="Enseignant">Enseignant</f:option>
 									<f:option value="Administrateur">Administrateur</f:option>
@@ -155,9 +155,28 @@
 						<div class="col">
 							<label>Enseignants</label>
 							<div>
+								<%-- if action=='addGroupe', then that's alright.
+								 But if action=='updateGroupe' then the passed groupModel is the
+								 groupe bo itself and it have all the information (his members),
+								 => groupModel.enseignants (is a non empthy list, where enseignats
+								 is List<Enseignants>, so the id and name, prenom is there)
+								 the problem is, in the addition stage, the groupe.enseignants
+								 suppose to raise error since the GroupeModel have enseignats as
+								 a list of ids.
+								 => So accessing
+								 objects don't have ens
+
+								 --%>
 								<select id="example-multiple-selected" name="enseignants" multiple="multiple">
 									<c:forEach items="${enseignantList}" var="e">
-										<option value="${e.idPersonnel}"><c:out value="${e.prenom} ${e.nom}" /></option>
+										<c:choose>
+											<c:when test="${groupeModel.enseignants.contains(e.idPersonnel)}">
+												<option value="${e.idPersonnel}" selected><c:out value="${e.prenom} ${e.nom}" /></option>
+											</c:when>
+											<c:otherwise>
+												<option value="${e.idPersonnel}"><c:out value="${e.prenom} ${e.nom}" /></option>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 								</select>
 							</div>

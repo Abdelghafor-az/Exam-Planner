@@ -41,7 +41,7 @@ public class LoginController {
 			String roleName = userAccount.getRole().getNomRole();
 
 			userInfo = new UserAndAccountInfos(u.getIdPersonne(), userAccount.getIdCompte(), userAccount.getLogin(),
-					u.getNom(), u.getPrenom());
+					u.getUsername());
 
 			// On le stocke dans la session
 			httpSession.setAttribute("userInfo", userInfo);

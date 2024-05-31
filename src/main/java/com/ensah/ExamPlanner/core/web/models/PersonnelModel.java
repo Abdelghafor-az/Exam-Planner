@@ -1,14 +1,21 @@
 package com.ensah.ExamPlanner.core.web.models;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class PersonnelModel {
 
     private Long idPersonnel;
 
+    @NotBlank
     private String nom;
 
+    @NotBlank
     private String prenom;
 
+    @Pattern(regexp = "^Enseignant$|^Administrateur$",
+            message = "accept only 'Enseignant' or 'Administrateur' roles.")
     private String type;
 
     public PersonnelModel() {}

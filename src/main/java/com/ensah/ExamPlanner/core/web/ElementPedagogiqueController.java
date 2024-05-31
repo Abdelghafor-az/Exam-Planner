@@ -1,11 +1,10 @@
 package com.ensah.ExamPlanner.core.web;
 
-import com.ensah.ExamPlanner.core.bo.Administrateur;
+import com.ensah.ExamPlanner.core.bo.ElementPedagogique;
 import com.ensah.ExamPlanner.core.bo.Enseignant;
-import com.ensah.ExamPlanner.core.bo.Groupe;
-import com.ensah.ExamPlanner.core.bo.Personnel;
 import com.ensah.ExamPlanner.core.services.*;
-import com.ensah.ExamPlanner.core.web.models.GroupeModel;
+import com.ensah.ExamPlanner.core.web.models.ElementPedagogiqueModel;
+import com.ensah.ExamPlanner.core.web.models.ExamenModel;
 import com.ensah.ExamPlanner.core.web.models.PersonnelModel;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,12 @@ public class ElementPedagogiqueController {
 	@Autowired
 	private IElementPedagogiqueService epService;
 
+	@Autowired
+	private IEnseignantService enseignantService;
+
+	@Autowired
+	private INiveauService niveauService;
+
 	@ModelAttribute
 	public void init(Model model) {
 		model.addAttribute("/showElementForm", false);
@@ -30,89 +35,89 @@ public class ElementPedagogiqueController {
 
 	@RequestMapping("showElementForm")
 	public String showElementForm(Model model) {
-		model.addAttribute("action", "addPersonnel");
-		model.addAttribute("personnelModel", new PersonnelModel());
-		model.addAttribute("showForm", true);
+		model.addAttribute("action", "addElement");
+		model.addAttribute("elementModel", new ExamenModel());
+		model.addAttribute("showElementForm", true);
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 
 	@PostMapping("/addElement")
-	public String addElement(@Valid @ModelAttribute("personnelModel") PersonnelModel personnelModel, BindingResult bindingResult,
-			Model model) {
-
+	public String addElement(@Valid @ModelAttribute("elementModel") ElementPedagogiqueModel epModel,
+							 BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("showForm", true);
+			model.addAttribute("showElementForm", true);
 			model.addAttribute("errorMsg", "Les données sont invalides.");
-			return "admin/form";
+			return "admin/form-pdg";
 		}
 
-		Enseignant enseignant = new Enseignant(
-				personnelModel.getNom(),
-				personnelModel.getPrenom()
+		ElementPedagogique elementPedagogique = new ElementPedagogique(
+				epModel.getTitle(),
+				enseignantService.getEnseignantById(epModel.getEnseignant()),
+				enseignantService.getEnseignantById(epModel.getCoordonnateur()),
+				niveauService.getNiveauById(epModel.getNiveau())
 		);
-//			enseignantService.addEnseignant(enseignant);
-		model.addAttribute("infoMsg", "Enseignant ajouté avec succès");
+		epService.addElementPedagogique(elementPedagogique);
+		model.addAttribute("infoMsg", "Element Pedagogique ajouté avec succès");
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 
 	@GetMapping("/deleteElement/{idElement}")
-	public String deletePersonnel(@PathVariable("idElement") Long idPersonnel, Model model) {
-//		personnelService.deletePersonnel(idPersonnel);
-		model.addAttribute("infoMsg", "Personnel supprimé avec succès");
+	public String deletePersonnel(@PathVariable("idElement") Long idElement, Model model) {
+		epService.deleteElementPedagogique(idElement);
+		model.addAttribute("infoMsg", "Element Pedagogique supprimé avec succès");
 		model.addAttribute("elementlList", epService.getAllElementPedagogiques());
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 
 	@GetMapping("/updateElement/{idElement}")
-	public String updateElementForm(@PathVariable("idElement") Long idElement,
-									  @PathVariable("type") Character type, Model model) {
-//		Personnel personnel = personnelService.getPersonnelById(idPersonnel);
-//		PersonnelModel personnelModel = new PersonnelModel(
-//				personnel.getIdPersonnel(),
-//				personnel.getNom(),
-//				personnel.getPrenom(),
-//				type == 'E' ? "Enseignant" : "Administrateur"
-//		);
-		if (type == 'E') {
-			model.addAttribute("action", "updateEnseignant");
-		} else if (type == 'A') {
-			model.addAttribute("action", "updateAdministrateur");
-		}
-		model.addAttribute("showForm", true);
+	public String updateElementForm(@PathVariable("idElement") Long idElement, Model model) {
+		ElementPedagogique elementPedagogique = epService.getElementPedagogiqueById(idElement);
+		// TODO: in the view, i need the id, title, enseignant(id+name), coordonnateur(id+name)
+		model.addAttribute("elementModel", elementPedagogique);
+		model.addAttribute("action", "updateElement");
+		model.addAttribute("showElementForm", true);
 		model.addAttribute("elementList", epService.getAllElementPedagogiques());
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 
 	@PostMapping("/updateElement")
-	public String updateElement(@Valid @ModelAttribute("personnelModel") Enseignant enseignant, BindingResult bindingResult,
-								Model model) {
-
+	public String updateElement(@Valid @ModelAttribute("elementModel") ElementPedagogiqueModel epModel,
+								BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("showForm", true);
 			model.addAttribute("errorMsg", "Les données sont invalides.");
 		} else {
-//			enseignantService.updateEnseignant(enseignant);
+			ElementPedagogique elementPedagogique = new ElementPedagogique(
+					epModel.getIdElement(),
+					epModel.getTitle(),
+					enseignantService.getEnseignantById(epModel.getEnseignant()),
+					enseignantService.getEnseignantById(epModel.getCoordonnateur()),
+					niveauService.getNiveauById(epModel.getNiveau())
+			);
+			epService.updateElementPedagogique(elementPedagogique);
 			model.addAttribute("infoMsg", "Enseignant modifié avec succès");
 		}
+		model.addAttribute("niveauList", niveauService.getAllNiveaus());
 		model.addAttribute("elementList", epService.getAllElementPedagogiques());
+		model.addAttribute("enseignantList", enseignantService.getAllEnseignants());
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 
 //	@PostMapping("/searchContact")
 //	public String searchContact(@RequestParam("keyword") String keyword, Model model) {
 //		model.addAttribute("contactList", contactService.searchContact(keyword));
-//		return "form";
+//		return "form-pdg";
 //	}
 
 	@GetMapping("/allElements")
 	public String allElements(Model model) {
 		model.addAttribute("elementList", epService.getAllElementPedagogiques());
 
-		return "admin/form";
+		return "admin/form-pdg";
 	}
 }

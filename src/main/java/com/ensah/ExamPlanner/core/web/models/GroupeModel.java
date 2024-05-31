@@ -10,6 +10,14 @@ public class GroupeModel {
 
     private List<Long> enseignants;
 
+    public GroupeModel() {}
+
+    public GroupeModel(Long idGroupe, String nomGroupe, List<Long> enseignants) {
+        this.idGroupe = idGroupe;
+        this.nomGroupe = nomGroupe;
+        this.enseignants = enseignants;
+    }
+
     public Long getIdGroupe() {
         return idGroupe;
     }

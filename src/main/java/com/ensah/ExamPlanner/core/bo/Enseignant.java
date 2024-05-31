@@ -6,7 +6,13 @@ import jakarta.persistence.*;
 @DiscriminatorValue("E")
 public class Enseignant extends Personnel {
 
-//    private String type = "Enseignant";
+    @ManyToOne
+    @JoinColumn(name = "id_filiere")
+    private Filiere filiere;
+
+    @ManyToOne
+    @JoinColumn(name = "id_departement")
+    private Departement departement;
 
     public Enseignant() {}
 
@@ -14,9 +20,25 @@ public class Enseignant extends Personnel {
         super(firstName, lastName);
     }
 
-//    public Enseignant(Long idEnseignant, String firstName, String lastName) {
-//        super(idEnseignant, firstName, lastName);
-//    }
+    public Enseignant(Long idEnseignant, String firstName, String lastName) {
+        super(idEnseignant, firstName, lastName);
+    }
+
+    public Filiere getFiliere() {
+        return filiere;
+    }
+
+    public void setFiliere(Filiere filiere) {
+        this.filiere = filiere;
+    }
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
 
     @Override
     public String toString() {

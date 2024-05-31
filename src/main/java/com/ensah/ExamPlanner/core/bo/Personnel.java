@@ -1,6 +1,7 @@
 package com.ensah.ExamPlanner.core.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -12,8 +13,10 @@ public class Personnel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPersonnel;
 
+	@NotBlank
 	private String nom;
 
+	@NotBlank
 	private String prenom;
 
 	//	@OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL, targetEntity = UserAccount.class)

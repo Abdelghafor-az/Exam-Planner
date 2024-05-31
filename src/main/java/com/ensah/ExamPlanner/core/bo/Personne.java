@@ -1,6 +1,7 @@
 package com.ensah.ExamPlanner.core.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
 
@@ -11,10 +12,9 @@ public class Personne {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPersonne;
 
-	private String nom;
-
-	private String prenom;
-
+	@NotBlank
+	@Column(unique = true)
+	private String username;
 
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = UserAccount.class)
 	@JoinColumn(name = "id_compte_personne")
@@ -28,20 +28,12 @@ public class Personne {
 		this.idPersonne = idPerson;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public UserAccount getComptes() {

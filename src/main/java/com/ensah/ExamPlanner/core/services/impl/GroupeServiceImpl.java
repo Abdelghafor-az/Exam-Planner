@@ -16,8 +16,12 @@ public class GroupeServiceImpl implements IGroupeService {
 	@Autowired
 	private IGroupeRepository groupeDao;
 
-	public List<Groupe> getAllGroupes() {
-		return groupeDao.findAll();
+	public void addGroupe(Groupe pGroupe) {
+		groupeDao.save(pGroupe);
+	}
+
+	public void updateGroupe(Groupe pGroupe) {
+		groupeDao.save(pGroupe);
 	}
 
 	public void deleteGroupe(Long id) {
@@ -28,11 +32,11 @@ public class GroupeServiceImpl implements IGroupeService {
 		return groupeDao.findById(id).get();
 	}
 
-	public void addGroupe(Groupe pGroupe) {
-		groupeDao.save(pGroupe);
+	public List<Groupe> getGroupeByIds(List<Long> ids) {
+		return groupeDao.findAllById(ids);
 	}
 
-	public void updateGroupe(Groupe pGroupe) {
-		groupeDao.save(pGroupe);
+	public List<Groupe> getAllGroupes() {
+		return groupeDao.findAll();
 	}
 }

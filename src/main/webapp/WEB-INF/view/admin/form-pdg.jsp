@@ -6,7 +6,7 @@
 <html>
 	<head>
 	<title>Element Pedagogique Management</title>
-<%--	<link rel="stylesheet" href="/src/main/webapp/resources/css/custom.css" type="text/css">--%>
+	<link rel="stylesheet" href="/src/main/webapp/resources/css/custom.css" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
 	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
 	crossorigin="anonymous">
@@ -18,27 +18,6 @@
 	<!-- Include the plugin's CSS and JS: -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" type="text/css" />
-
-	<style>
-	h3 {
-		margin-top: 20px;
-	}
-
-	#navbarNav div {
-		height: 0;
-	}
-
-	#navbarNav form {
-		margin: 0;
-		padding: 0;
-	}
-
-	form {
-		margin-bottom: 60px;
-		margin-top: 10px;
-		padding: 10px;
-	}
-	</style>
 
 </head>
 <body>
@@ -52,16 +31,10 @@
 						aria-current="page"
 						href="${pageContext.request.contextPath}/admin/showForm">Home</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/admin/showForm">Add Element Pedagogique
+						href="${pageContext.request.contextPath}/admin/showElementForm">Add Element Pedagogique
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/admin/showGroupeForm">Add Groupe
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/admin/allPersonnels">All Personnels
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/admin/allGroupes">All Groupes
+						href="${pageContext.request.contextPath}/admin/allElements">All Element Pedagogiques
 					</a></li>
 					<li class="nav-item">
 						<form action="${pageContext.request.contextPath}/admin/searchPersonnel"
@@ -77,17 +50,11 @@
 		<!-- End Menu de l'application -->
 
 		<div>
-			<c:if test="${action=='admin/addPersonnel'}">
-				<h3>New Personnel</h3>
+			<c:if test="${action=='admin/addElement'}">
+				<h3>New Element Pedagogique</h3>
 			</c:if>
-			<c:if test="${action=='admin/updatePersonnel'}">
-				<h3>Update Personnel</h3>
-			</c:if>
-			<c:if test="${action=='admin/addGroupe'}">
-				<h3>New Groupe</h3>
-			</c:if>
-			<c:if test="${action=='admin/updateGroupe'}">
-				<h3>Update Groupe</h3>
+			<c:if test="${action=='admin/updateElement'}">
+				<h3>Update Element Pedagogique</h3>
 			</c:if>
 		</div>
 
@@ -99,22 +66,22 @@
 				<div class="alert alert-danger" role="alert">${errorMsg}</div>
 			</c:if>
 
-			<c:if test="${showForm}">
-				<%--@elvariable id="personnelModel" type="com"--%>
+			<c:if test="${showElementForm}">
+				<%--@elvariable id="elementModel" type="com"--%>
 				<f:form action="${pageContext.request.contextPath}/admin/${action}"
-					method="POST" modelAttribute="personnelModel">
+					method="POST" modelAttribute="elementModel">
 
 					<div class="row">
-						<f:input path="idPersonnel" type="hidden" />
+						<f:input path="idElementPedagogique" type="hidden" />
 						<div class="col">
-							<label>First Name</label>
-							<f:input path="prenom" type="text" class="form-control"
-								placeholder="First Name" />
+							<label>Element Pedagogique Title</label>
+							<f:input path="title" type="text" class="form-control"
+								placeholder="Title" />
 							<f:errors path="prenom" class="text-danger" />
 						</div>
 
 						<div class="col">
-							<label>Last Name</label>
+							<label>Type</label>
 							<f:input path="nom" type="text" class="form-control"
 								placeholder="Last Name" />
 							<f:errors path="nom" class="text-danger" />
@@ -130,38 +97,6 @@
 								<f:errors path="type" class="text-danger" />
 							</div>
 						</c:if>
-					</div>
-
-					<div class="text-right mt-3">
-						<button type="submit" class="btn btn-primary">Send</button>
-						<button type="reset" class="btn btn-secondary">Rest</button>
-					</div>
-				</f:form>
-			</c:if>
-
-			<c:if test="${showGroupeForm}">
-				<%--@elvariable id="groupeModel" type="com"--%>
-				<f:form action="${pageContext.request.contextPath}/admin/${action}"
-						method="POST" modelAttribute="groupeModel">
-
-					<div class="row">
-						<f:input path="idGroupe" type="hidden" />
-						<div class="col">
-							<label>Group Name</label>
-							<f:input path="nomGroupe" type="text" class="form-control"
-									 placeholder="Group Name" />
-							<f:errors path="nomGroupe" class="text-danger" />
-						</div>
-						<div class="col">
-							<label>Enseignants</label>
-							<div>
-								<select id="example-multiple-selected" name="enseignants" multiple="multiple">
-									<c:forEach items="${enseignantList}" var="e">
-										<option value="${e.idPersonnel}"><c:out value="${e.prenom} ${e.nom}" /></option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
 					</div>
 
 					<div class="text-right mt-3">
@@ -194,41 +129,15 @@
 							</td>
 						</tr>
 					</c:forEach>--%>
-				<c:forEach items="${groupeList}" var="g">
+				<c:forEach items="${elementList}" var="el">
 					<tr>
 						<td><c:out value="${g.nomGroupe}" /></td>
 						<td><c:out value="-----" /></td>
 						<td><c:out value="Groupe" /></td>
 						<td>
 							<ul>
-								<li><a href="deleteGroupe/${g.idGroupe}">Delete</a></li>
-								<li><a href="updateGroupe/${g.idGroupe}">Update</a></li>
-							</ul>
-						</td>
-					</tr>
-				</c:forEach>
-				<c:forEach items="${enseignantList}" var="p">
-					<tr>
-						<td><c:out value="${p.prenom}" /></td>
-						<td><c:out value="${p.nom}" /></td>
-						<td><c:out value="Enseignant" /></td>
-						<td>
-							<ul>
-								<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-								<li><a href="updatePersonnel/E/${p.idPersonnel}">Update</a></li>
-							</ul>
-						</td>
-					</tr>
-				</c:forEach>
-				<c:forEach items="${administrateurList}" var="p">
-					<tr>
-						<td><c:out value="${p.prenom}" /></td>
-						<td><c:out value="${p.nom}" /></td>
-						<td><c:out value="Administrateur" /></td>
-						<td>
-							<ul>
-								<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-								<li><a href="updatePersonnel/A/${p.idPersonnel}">Update</a></li>
+								<li><a href="deleteGroupe/${el.idElement}">Delete</a></li>
+								<li><a href="updateGroupe/${el.idGroupe}">Update</a></li>
 							</ul>
 						</td>
 					</tr>

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ensah.ExamPlanner.core.services.IEnseignantService;
 import com.ensah.ExamPlanner.core.services.IAdministrateurService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,17 +54,7 @@ public class PersonnelController {
 		return "admin/form";
 	}
 
-	@RequestMapping("showGroupeForm")
-	public String showGroupeForm(Model model) {
-		model.addAttribute("action", "addGroupe");
-		model.addAttribute("groupeModel", new GroupeModel());
-		// model.addAttribute("showForm", false);
-		model.addAttribute("showGroupeForm", true);
-		initializeLists(model);
-
-		return "admin/form";
-	}
-
+	// TODO: here also, use only addPersonnel methode and pass the type, the infoMsg attribute value can be parameterized.
 	@PostMapping("/addPersonnel")
 	public String addPersonnel(@Valid @ModelAttribute("personnelModel") PersonnelModel personnelModel, BindingResult bindingResult,
 			Model model) {
@@ -95,58 +86,12 @@ public class PersonnelController {
 		return "admin/form";
 	}
 
-	@PostMapping("/addGroupe")
-	public String addGroupe(@Valid @ModelAttribute("groupeModel") GroupeModel groupeModel, BindingResult bindingResult,
-							Model model) {
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("showForm", true);
-			model.addAttribute("errorMsg", "Les données sont invalides.");
-			return "admin/form";
-		}
-
-		Groupe groupe = new Groupe();
-		groupe.setNomGroupe(groupeModel.getNomGroupe());
-
-		List<Enseignant> selectedEnseignants = enseignantService.getEnseignantsByIds(groupeModel.getEnseignants());
-		groupe.setEnseignants(selectedEnseignants);
-
-		groupeService.addGroupe(groupe);
-
-		initializeLists(model);
-
-		return "admin/form";
-	}
-
-	@GetMapping("/deletePersonnel/{idPersonnel}")
-	public String deletePersonnel(@PathVariable("idPersonnel") Long idPersonnel, Model model) {
-		personnelService.deletePersonnel(idPersonnel);
-		model.addAttribute("infoMsg", "Personnel supprimé avec succès");
-		model.addAttribute("personnelList", personnelService.getAllPersonnels());
-
-		return "admin/form";
-	}
-
-	@GetMapping("/deleteGroupe/{idGroupe}")
-	public String deleteGroupe(@PathVariable("idGroupe") Long idGroupe, Model model) {
-		groupeService.deleteGroupe(idGroupe);
-		model.addAttribute("infoMsg", "Groupe supprimé avec succès");
-		model.addAttribute("groupeList", groupeService.getAllGroupes());
-
-		return "admin/form";
-	}
-
+	// TODO: you can transfer that logic within that methode to service layer, move to updatePersonnel endpoint only
 	@GetMapping("/updatePersonnel/{type}/{idPersonnel}")
 	public String updatePersonnelForm(@PathVariable("idPersonnel") Long idPersonnel,
 									  @PathVariable("type") Character type, Model model) {
 		Personnel personnel = personnelService.getPersonnelById(idPersonnel);
-		PersonnelModel personnelModel = new PersonnelModel(
-				personnel.getIdPersonnel(),
-				personnel.getNom(),
-				personnel.getPrenom(),
-				type == 'E' ? "Enseignant" : "Administrateur"
-		);
-		model.addAttribute("personnelModel", personnelModel);
+		model.addAttribute("personnelModel", personnel);
 		if (type == 'E') {
 			model.addAttribute("action", "updateEnseignant");
 		} else if (type == 'A') {
@@ -177,10 +122,11 @@ public class PersonnelController {
 	}
 	*/
 
-    @PostMapping("/updateEnseignant")
-	public String updateEnseignat(@Valid @ModelAttribute("personnelModel") Enseignant enseignant, BindingResult bindingResult,
-								Model model) {
-
+	// TODO: use only one endpoint named 'updatePersonnel' that take PersonnelModel as input, and pass the logic to the service (you will need to pass the type)
+    // TODO: since you use personnel dao only for reading and you want to use it also for the update, consider removing other unused methods in the service layer
+	@PostMapping("/updateEnseignant")
+	public String updateEnseignat(@Valid @ModelAttribute("personnelModel") Enseignant enseignant,
+								  BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("showForm", true);
 			model.addAttribute("errorMsg", "Les données sont invalides.");
@@ -211,11 +157,14 @@ public class PersonnelController {
 		return "admin/form";
 	}
 
-//	@PostMapping("/searchContact")
-//	public String searchContact(@RequestParam("keyword") String keyword, Model model) {
-//		model.addAttribute("contactList", contactService.searchContact(keyword));
-//		return "form";
-//	}
+	@GetMapping("/deletePersonnel/{idPersonnel}")
+	public String deletePersonnel(@PathVariable("idPersonnel") Long idPersonnel, Model model) {
+		personnelService.deletePersonnel(idPersonnel);
+		model.addAttribute("infoMsg", "Personnel supprimé avec succès");
+		model.addAttribute("personnelList", personnelService.getAllPersonnels());
+
+		return "admin/form";
+	}
 
 	@GetMapping("/allPersonnels")
 	public String allPersonnels(Model model) {
@@ -224,6 +173,99 @@ public class PersonnelController {
 
 		return "admin/form";
 	}
+
+	// TODO: do I need to pass group members? because i can access them
+	@RequestMapping("showGroupeForm")
+	public String showGroupeForm(Model model) {
+		model.addAttribute("action", "addGroupe");
+		model.addAttribute("groupeModel", new GroupeModel());
+		// model.addAttribute("showForm", false);
+		model.addAttribute("showGroupeForm", true);
+		// TODO: let those clever things after exam management
+		// if i want to see only groupes on the 'addGroupe' endpoint
+		// model.addAttribute("groupeList", groupeService.getAllGroupes());
+
+		initializeLists(model);
+
+		return "admin/form";
+	}
+
+	@PostMapping("/addGroupe")
+	public String addGroupe(@Valid @ModelAttribute("groupeModel") GroupeModel groupeModel, BindingResult bindingResult,
+							Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("showForm", true);
+			model.addAttribute("errorMsg", "Les données sont invalides.");
+			return "admin/form";
+		}
+
+		Groupe groupe = new Groupe();
+		groupe.setNomGroupe(groupeModel.getNomGroupe());
+
+		List<Enseignant> selectedEnseignants = enseignantService.getEnseignantsByIds(groupeModel.getEnseignants());
+		groupe.setEnseignants(selectedEnseignants);
+		groupeService.addGroupe(groupe);
+
+		initializeLists(model);
+
+		return "admin/form";
+	}
+
+	@GetMapping("/updateGroupe/{idGroupe}")
+	public String updateGroupeForm(@PathVariable("idGroupe") Long idGroupe, Model model) {
+		Groupe groupe = groupeService.getGroupeById(idGroupe);
+		List<Long> groupeMembers = new ArrayList<Long>();
+		groupe.getEnseignants().forEach(enseignant ->
+				groupeMembers.add(enseignant.getIdPersonnel()));
+		// prepare the dto
+		GroupeModel groupeModel = new GroupeModel(
+				groupe.getIdGroupe(),
+				groupe.getNomGroupe(),
+				groupeMembers
+		);
+		model.addAttribute("groupeModel", groupeModel);
+		model.addAttribute("action", "updateGroupe");
+		model.addAttribute("showGroupeForm", true);
+		model.addAttribute("groupeList", groupeService.getAllGroupes());
+		// TODO: test also passing groupeMembers (List<Long>)
+
+		return "admin/form";
+	}
+
+	@PostMapping("/updateGroupe")
+	public String updateGroupe(@Valid @ModelAttribute("groupeModel") GroupeModel groupeModel,
+							   BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("showGroupeForm", true);
+			model.addAttribute("errorMsg", "Les données sont invalides.");
+		} else {
+			Groupe groupe = new Groupe(
+					groupeModel.getIdGroupe(),
+					groupeModel.getNomGroupe(),
+					enseignantService.getEnseignantsByIds(groupeModel.getEnseignants())
+			);
+			groupeService.updateGroupe(groupe);
+			model.addAttribute("infoMsg", "Groupe modifié avec succès");
+		}
+		initializeLists(model);
+
+		return "admin/form";
+	}
+
+	@GetMapping("/deleteGroupe/{idGroupe}")
+	public String deleteGroupe(@PathVariable("idGroupe") Long idGroupe, Model model) {
+		groupeService.deleteGroupe(idGroupe);
+		model.addAttribute("infoMsg", "Groupe supprimé avec succès");
+		model.addAttribute("groupeList", groupeService.getAllGroupes());
+
+		return "admin/form";
+	}
+
+//	@PostMapping("/searchContact")
+//	public String searchContact(@RequestParam("keyword") String keyword, Model model) {
+//		model.addAttribute("contactList", contactService.searchContact(keyword));
+//		return "form";
+//	}
 
 	@GetMapping("/allGroupes")
 	public String allGroupes(Model model) {

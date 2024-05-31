@@ -57,12 +57,9 @@ public class UserPrincipal implements UserDetails {
 	// TODO : les méthodes suivantes à adapter si vous changer la conception des
 	// classes
 	// Sinon vous pouvez les laisser telles quelles
-	public String getFirstName() {
-		return user.getProprietaire().getNom();
-	}
-
-	public String getLastName() {
-		return user.getProprietaire().getPrenom();
+	@Override
+	public String getUsername() {
+		return user.getProprietaire().getUsername();
 	}
 
 	@Override
@@ -70,8 +67,7 @@ public class UserPrincipal implements UserDetails {
 		return user.getPassword();
 	}
 
-	@Override
-	public String getUsername() {
+	public String getLogin() {
 		return user.getLogin();
 	}
 

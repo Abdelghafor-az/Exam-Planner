@@ -14,5 +14,7 @@ public interface IGroupeService {
 
 	public void deleteGroupe(Long id);
 
+	public List<Groupe> getGroupeByIds(List<Long> ids);
+
 	public List<Groupe> getAllGroupes();
 }

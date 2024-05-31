@@ -1,0 +1,20 @@
+/* Pr styling */
+h3 {
+    margin-top: 20px;
+}
+
+#navbarNav div {
+    height: 0;
+}
+
+#navbarNav form {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    margin-bottom: 60px;
+    margin-top: 10px;
+    padding: 10px;
+}
+/* End Pf styling */

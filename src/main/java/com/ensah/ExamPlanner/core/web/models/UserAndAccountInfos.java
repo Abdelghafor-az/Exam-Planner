@@ -3,32 +3,28 @@ package com.ensah.ExamPlanner.core.web.models;
 public class UserAndAccountInfos {
 
 	private Long idPersonne;
-	
+
 	private Long idCompte;
-	
+
 	private String login;
-	
-	private String nom;
-	
-	private String prenom;
-	
-	
+
+	private String username;
+
 	public UserAndAccountInfos() {
 	}
-	
 
-	public UserAndAccountInfos(Long idPersonne, Long idCompte, String login, String nom, String prenom) {
+
+	public UserAndAccountInfos(Long idPersonne, Long idCompte, String login, String username) {
 		this.idPersonne = idPersonne;
 		this.idCompte = idCompte;
 		this.login = login;
-		this.nom = nom;
-		this.prenom = prenom;
+		this.username = username;
 	}
 
 	@Override
 	public String toString() {
 		return "UserAndAccountInfos [idPersonne=" + idPersonne + ", idCompte=" + idCompte + ", login=" + login
-				+ ", nom=" + nom + ", prenom=" + prenom + "]";
+				+ ", username=" + username + "]";
 	}
 
 	public Long getIdPersonne() {
@@ -55,19 +51,11 @@ public class UserAndAccountInfos {
 		this.login = login;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

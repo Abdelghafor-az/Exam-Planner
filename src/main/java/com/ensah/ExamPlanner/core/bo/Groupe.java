@@ -16,8 +16,8 @@ public class Groupe {
     @Column(unique = true, nullable = false)
     private String nomGroupe;
 
-     @OneToMany
-     @JoinColumn(name = "id_groupe")
+    @OneToMany
+    @JoinColumn(name = "id_groupe")
 //    @ManyToMany
 //    @JoinTable(
 //            name = "groupe_enseignant",
@@ -25,6 +25,14 @@ public class Groupe {
 //            inverseJoinColumns = @JoinColumn(name = "enseignant_id")
 //    )
     private List<Enseignant> enseignants;
+
+    public Groupe() {}
+
+    public Groupe(Long idGroupe, String nomGroupe, List<Enseignant> enseignants) {
+        this.idGroupe = idGroupe;
+        this.nomGroupe = nomGroupe;
+        this.enseignants = enseignants;
+    }
 
     public Long getIdGroupe() {
         return idGroupe;
