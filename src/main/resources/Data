@@ -3,16 +3,6 @@ INSERT INTO `role` (`idRole`, `nomRole`) VALUES (1, 'ROLE_ADMIN');
 INSERT INTO `useraccount` (`accountNonExpired`, `accountNonLocked`, `credentialsNonExpired`, `enabled`, `idCompte`, `idRole`, `idUtilisateur`, `login`, `password`) VALUES
 (b'1', b'1', b'1', b'1', 1, 1, 1, 'admin', '{bcrypt}$2a$10$vsjRwUSUi2B/jlw4ATXEN.B2IIcVY8ourImFZnWcW1tLz3G6mLfpe');
 
-INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES
-('E', 'RAG', 'Abdelghafor'),
-('A', 'Khalid', 'Aissam'),
-('E', 'Boudaa', 'Tarik'),
-('A', 'Alaoui', 'Taha'),
-('E', 'Mota', 'Hamza');
-
-INSERT INTO niveau (nomNiveau) VALUES
-('CP1'), ('CP2'), ('CI1'), ('CI2'), ('CI3');
-
 INSERT INTO departement (nomDepartement) VALUES
 ('Mathématiques et Informatique'),
 ('Génie Civil Energétique et Environnement');
@@ -26,3 +16,29 @@ INSERT INTO filiere (nomFiliere) VALUES
 ('GM1'), ('GM2'), ('GM3'),
 ('ID1'), ('ID2'), ('ID3'),
 ('TDIA1'), ('TDIA2'), ('TDIA3');
+
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom, id_filiere, id_departement) VALUES
+('E', 'Khamjane', 'Abdelaziz', 18, 1),
+('E', 'Boudaa', 'Tarik', 19, 1),
+('E', 'Elhaddai', 'Anass', 20, 1),
+('E', 'Dynamo', 'Hamza', 5, 1);
+('E', 'Ziad', 'Amine', 6, 2);
+INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES
+('A', 'Alaoui', 'Taha'),
+('A', 'Aissam', 'Khalid');
+
+INSERT INTO niveau (nomNiveau) VALUES
+('CP1'), ('CP2'), ('CI1'), ('CI2'), ('CI3');
+
+INSERT INTO elementpedagogique (titre, type, id_enseignant, id_coordonnateur, id_niveau) VALUES
+('NLP', 'Module', 2, 2, 4),
+('ML', 'Module', 1, 1, 3),
+('NoSQL', 'Element', 4, 3, 4),
+('CRM', 'Element', 3, 3, 5),
+('JEE', 'Module', 2, 2, 4);
+
+INSERT INTO salle (nomSalle, capacite) VALUES
+('Amphi A', 250), ('Amphi B', 200),
+('5AB', 80), ('6AB', 80), ('7AB', 80), ('8AB', 80),
+('1NB', 50), ('2NB', 50), ('3NB', 50), ('4NB', 50),
+('5NB', 50), ('6NB', 50);

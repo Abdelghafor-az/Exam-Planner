@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.Duration;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -15,9 +16,13 @@ public class Examen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idExamen;
 
-    @NotBlank(message = "This field is required")
-    @Column(unique = true, nullable = false)
-    private String nomExamen;
+    private Stage stage;
+
+    // @NotBlank(message = "This field is required")
+    //@Column(unique = true, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_matiere")
+    private ElementPedagogique matiere;
 
     private String semestre;
 
@@ -25,22 +30,43 @@ public class Examen {
 
     private String typeExamen;
 
-    private Date dateExamen;
+    private LocalDate dateExamen;
+
+    private LocalTime heureExamen;
 
     private Duration dureePrevue;
 
     private Duration dureeReelle;
 
+    /*
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_examen")
     private List<Surveillance> surveillances;
+     */
 
-    @Transient
+    @OneToMany(mappedBy = "examen", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+
+    //@Transient
     private String AnneUniversitaire;
+
+    private String epreuve;
 
     private String pv;
 
-    private String rapport;
+    private String rapport = "Rien à signaler";
+
+    public Examen() {}
+
+    public Examen(ElementPedagogique matiere, String semestre, String session, String typeExamen, LocalDate dateExamen, LocalTime heureExamen, String anneUniversitaire) {
+        this.matiere = matiere;
+        this.semestre = semestre;
+        this.session = session;
+        this.typeExamen = typeExamen;
+        this.dateExamen = dateExamen;
+        this.heureExamen = heureExamen;
+        this.AnneUniversitaire = anneUniversitaire;
+    }
 
     public Long getIdExamen() {
         return idExamen;
@@ -50,12 +76,20 @@ public class Examen {
         this.idExamen = idExamen;
     }
 
-    public String getNomExamen() {
-        return nomExamen;
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setNomExamen(String nomExamen) {
-        this.nomExamen = nomExamen;
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public ElementPedagogique getMatiere() {
+        return matiere;
+    }
+
+    public void setMatiere(ElementPedagogique matiere) {
+        this.matiere = matiere;
     }
 
     public String getSemestre() {
@@ -82,12 +116,20 @@ public class Examen {
         this.typeExamen = typeExamen;
     }
 
-    public Date getDateExamen() {
+    public LocalDate getDateExamen() {
         return dateExamen;
     }
 
-    public void setDateExamen(Date dateExamen) {
+    public void setDateExamen(LocalDate dateExamen) {
         this.dateExamen = dateExamen;
+    }
+
+    public LocalTime getHeureExamen() {
+        return heureExamen;
+    }
+
+    public void setHeureExamen(LocalTime heureExamen) {
+        this.heureExamen = heureExamen;
     }
 
     public Duration getDureePrevue() {
@@ -106,20 +148,28 @@ public class Examen {
         this.dureeReelle = dureeReelle;
     }
 
-    public List<Surveillance> getSurveillance() {
-        return surveillances;
-    }
-
-    public void setSurveillance(List<Surveillance> surveillance) {
-        this.surveillances = surveillance;
-    }
-
     public String getAnneUniversitaire() {
         return AnneUniversitaire;
     }
 
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
     public void setAnneUniversitaire(String anneUniversitaire) {
         AnneUniversitaire = anneUniversitaire;
+    }
+
+    public String getEpreuve() {
+        return epreuve;
+    }
+
+    public void setEpreuve(String epreuve) {
+        this.epreuve = epreuve;
     }
 
     public String getPv() {

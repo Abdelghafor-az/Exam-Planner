@@ -21,7 +21,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		UserAccount user = userAccountDao.getUserAccountByLogin(username);
-		System.out.println(user);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("Utilisateur introuvable par " + username);

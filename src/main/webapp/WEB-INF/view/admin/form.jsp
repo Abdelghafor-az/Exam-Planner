@@ -179,7 +179,7 @@
 			</c:if>
 		</div>
 
-		<div>
+		<div class="mt-5">
 			<table class="table">
 				<thead>
 					<tr>

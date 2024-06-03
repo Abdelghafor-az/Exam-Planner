@@ -2,7 +2,6 @@ package com.ensah.ExamPlanner.core.bo;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class ElementPedagogique {

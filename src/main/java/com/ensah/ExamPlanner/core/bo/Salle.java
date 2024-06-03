@@ -14,6 +14,7 @@ public class Salle {
     @Column(unique = true, nullable = false)
     private String nomSalle;
 
+    @Column(nullable = false)
     private Integer capacite;
 
     public Long getIdSalle() {
@@ -22,6 +23,14 @@ public class Salle {
 
     public void setIdSalle(Long idSalle) {
         this.idSalle = idSalle;
+    }
+
+    public @NotBlank(message = "This field is required") String getNomSalle() {
+        return nomSalle;
+    }
+
+    public void setNomSalle(@NotBlank(message = "This field is required") String nomSalle) {
+        this.nomSalle = nomSalle;
     }
 
     public Integer getCapacite() {

@@ -1,31 +1,29 @@
 package com.ensah.ExamPlanner.core.web.models;
 
 import java.time.Duration;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class ExamenModel {
 
     private Long idExamen;
 
-    private String nomExamen;
-
+    private Long idMatiere;
     private String semestre;
-
     private String session;
-
     private String typeExamen;
 
-    private Date dateExamen;
-
+    private LocalDate dateExamen;
+    private LocalTime heureExamen;
     private Float dureePrevue;
-
     private Float dureeReelle;
 
+    private Integer nombreSalle;
     private List<Long> surveillances;
 
+    private String epreuve;
     private String pv;
-
     private String rapport;
 
     public ExamenModel() {}
@@ -38,12 +36,12 @@ public class ExamenModel {
         this.idExamen = idExamen;
     }
 
-    public String getNomExamen() {
-        return nomExamen;
+    public Long getIdMatiere() {
+        return idMatiere;
     }
 
-    public void setNomExamen(String nomExamen) {
-        this.nomExamen = nomExamen;
+    public void setIdMatiere(Long idMatiere) {
+        this.idMatiere = idMatiere;
     }
 
     public String getSemestre() {
@@ -70,12 +68,20 @@ public class ExamenModel {
         this.typeExamen = typeExamen;
     }
 
-    public Date getDateExamen() {
+    public LocalDate getDateExamen() {
         return dateExamen;
     }
 
-    public void setDateExamen(Date dateExamen) {
+    public void setDateExamen(LocalDate dateExamen) {
         this.dateExamen = dateExamen;
+    }
+
+    public LocalTime getHeureExamen() {
+        return heureExamen;
+    }
+
+    public void setHeureExamen(LocalTime heureExamen) {
+        this.heureExamen = heureExamen;
     }
 
     public Float getDureePrevue() {
@@ -94,12 +100,28 @@ public class ExamenModel {
         this.dureeReelle = dureeReelle;
     }
 
+    public Integer getNombreSalle() {
+        return nombreSalle;
+    }
+
+    public void setNombreSalle(Integer nombreSalle) {
+        this.nombreSalle = nombreSalle;
+    }
+
     public List<Long> getSurveillances() {
         return surveillances;
     }
 
     public void setSurveillances(List<Long> surveillances) {
         this.surveillances = surveillances;
+    }
+
+    public String getEpreuve() {
+        return epreuve;
+    }
+
+    public void setEpreuve(String epreuve) {
+        this.epreuve = epreuve;
     }
 
     public String getPv() {
@@ -116,5 +138,18 @@ public class ExamenModel {
 
     public void setRapport(String rapport) {
         this.rapport = rapport;
+    }
+
+    @Override
+    public String toString() {
+        return "ExamenModel{" +
+                "idExamen=" + idExamen +
+                ", idMatiere=" + idMatiere +
+                ", semestre='" + semestre + '\'' +
+                ", session='" + session + '\'' +
+                ", typeExamen='" + typeExamen + '\'' +
+                ", dateExamen=" + dateExamen +
+                ", heureExamen=" + heureExamen +
+                '}';
     }
 }

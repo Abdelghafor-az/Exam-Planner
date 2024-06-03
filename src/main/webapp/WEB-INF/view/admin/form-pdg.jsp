@@ -29,7 +29,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page"
-						href="${pageContext.request.contextPath}/admin/showForm">Home</a></li>
+						href="${pageContext.request.contextPath}/admin/showElementForm">Home</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/admin/showElementForm">Add Element Pedagogique
 					</a></li>
@@ -146,7 +146,7 @@
 			</c:if>
 		</div>
 
-		<div>
+		<div class="mt-5">
 			<table class="table">
 				<thead>
 					<tr>
