@@ -1,4 +1,4 @@
-package com.ensah.ExamPlanner.core.web;
+package com.ensah.ExamPlanner.core.web.controllers;
 
 import com.ensah.ExamPlanner.core.bo.Personne;
 import com.ensah.ExamPlanner.core.bo.UserAccount;
@@ -67,6 +67,6 @@ public class LoginController {
 
 		UserAndAccountInfos infoUser = getUserAccount();
 		m.addAttribute("userInfos", infoUser);
-		return "admin/form-exm";
+		return "home";
 	}
 }

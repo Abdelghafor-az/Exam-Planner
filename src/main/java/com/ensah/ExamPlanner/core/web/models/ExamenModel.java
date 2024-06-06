@@ -20,13 +20,14 @@ public class ExamenModel {
     private Float dureeReelle;
 
     private Integer nombreSalle;
-    private List<Long> surveillances;
+    private List<ReservationModel> reservations;
 
     private String epreuve;
     private String pv;
     private String rapport;
 
-    public ExamenModel() {}
+    public ExamenModel() {
+    }
 
     public Long getIdExamen() {
         return idExamen;
@@ -108,12 +109,12 @@ public class ExamenModel {
         this.nombreSalle = nombreSalle;
     }
 
-    public List<Long> getSurveillances() {
-        return surveillances;
+    public List<ReservationModel> getReservations() {
+        return reservations;
     }
 
-    public void setSurveillances(List<Long> surveillances) {
-        this.surveillances = surveillances;
+    public void setReservations(List<ReservationModel> reservations) {
+        this.reservations = reservations;
     }
 
     public String getEpreuve() {
@@ -150,6 +151,9 @@ public class ExamenModel {
                 ", typeExamen='" + typeExamen + '\'' +
                 ", dateExamen=" + dateExamen +
                 ", heureExamen=" + heureExamen +
+                ", dureePrevue=" + dureePrevue +
+                ", dureeReelle=" + dureeReelle +
+                ", nombreSalle=" + nombreSalle +
                 '}';
     }
 }

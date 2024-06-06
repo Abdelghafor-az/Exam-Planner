@@ -18,6 +18,10 @@ public class PersonnelModel {
             message = "accept only 'Enseignant' or 'Administrateur' roles.")
     private String type;
 
+    private String departement;
+
+    private Long filiere;
+
     public PersonnelModel() {}
 
     public PersonnelModel (Long idPersonnel, String nom, String prenom, String type) {

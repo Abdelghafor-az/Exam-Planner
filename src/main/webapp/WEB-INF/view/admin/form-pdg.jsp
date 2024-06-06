@@ -36,14 +36,6 @@
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/admin/allElements">All Element Pedagogiques
 					</a></li>
-					<li class="nav-item">
-						<form action="${pageContext.request.contextPath}/admin/searchPersonnel"
-							class="d-flex" method="POST">
-							<input name="keyword" class="form-control me-2" type="search"
-								placeholder="First name" aria-label="Search">
-							<button class="btn btn-outline-success" type="submit">Search</button>
-						</form>
-					</li>
 				</ul>
 			</div>
 		</nav>
@@ -175,9 +167,6 @@
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
-		<div>Spring Web App by Tarik BOUDAA, National School of Applied
-			Science Al Hoceima
 		</div>
 	</div>
 	<!-- Initialize the plugin: -->

@@ -1,11 +1,10 @@
-package com.ensah.ExamPlanner.core.web;
+package com.ensah.ExamPlanner.core.web.controllers;
 
 import com.ensah.ExamPlanner.core.bo.Administrateur;
 import com.ensah.ExamPlanner.core.bo.Enseignant;
 import com.ensah.ExamPlanner.core.bo.Groupe;
 import com.ensah.ExamPlanner.core.bo.Personnel;
-import com.ensah.ExamPlanner.core.services.IGroupeService;
-import com.ensah.ExamPlanner.core.services.IPersonnelService;
+import com.ensah.ExamPlanner.core.services.*;
 import com.ensah.ExamPlanner.core.web.models.GroupeModel;
 import com.ensah.ExamPlanner.core.web.models.PersonnelModel;
 import jakarta.validation.Valid;
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.ensah.ExamPlanner.core.services.IEnseignantService;
-import com.ensah.ExamPlanner.core.services.IAdministrateurService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +33,9 @@ public class PersonnelController {
 	@Autowired
 	private IGroupeService groupeService;
 
+	@Autowired
+	IFiliereService filiereService;
+
 	@ModelAttribute
 	public void init(Model model) {
 		model.addAttribute("/showForm", false);
@@ -47,6 +46,7 @@ public class PersonnelController {
 	public String showForm(Model model) {
 		model.addAttribute("action", "addPersonnel");
 		model.addAttribute("personnelModel", new PersonnelModel());
+		model.addAttribute("filiereList", filiereService.getAllFilieres());
 		model.addAttribute("showForm", true);
 		// model.addAttribute("showGroupeForm", true);
 		initializeLists(model);
@@ -102,25 +102,6 @@ public class PersonnelController {
 
 		return "admin/form";
 	}
-
-	/*
-	@PostMapping("/updatePersonnel")
-	public String updatePersonnel(@Valid @ModelAttribute("personnelModel") Personnel personnel, BindingResult bindingResult,
-			Model model) {
-
-		System.out.println(personnel);
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("showForm", true);
-			model.addAttribute("errorMsg", "Les données sont invalides.");
-		} else {
-			personnelService.updatePersonnel(personnel);
-			model.addAttribute("infoMsg", "Personnel modifié avec succès");
-		}
-		model.addAttribute("personnelList", personnelService.getAllPersonnels());
-
-		return "admin/form";
-	}
-	*/
 
 	// TODO: use only one endpoint named 'updatePersonnel' that take PersonnelModel as input, and pass the logic to the service (you will need to pass the type)
     // TODO: since you use personnel dao only for reading and you want to use it also for the update, consider removing other unused methods in the service layer

@@ -18,33 +18,10 @@
 <body>
 	<div class="container">
 
-
-
-		<div>
-			<h3> Spring Web Java Application </h3>
-			<p>This application was developed in an educational context at ENSAH Al Hoceima by <a target="_blank" href="https://boudaa.github.io/"> Tarik BOUDAA</a> </p>
-			<p> It is based on a layered JEE architecture and it is implemented with the following tools: </p>
-			<ul>
-			<li>Spring</li>
-			<li>Spring MVC</li>
-			<li>Hibernate</li>
-			<li>Spring Security</li>
-			<li>MariaDB</li>
-			<li>Passay</li>
-			<li>Log4j</li>
-			</ul>
-			
-		</div>
-		<div>
-		
-
 		<p>You can access the application 
 		<a href="${pageContext.request.contextPath}/showMyLoginPage"> by clicking here </a>  </p>
 
-
-		</div>
-
-
 	</div>
+
 </body>
 </html>

@@ -103,9 +103,9 @@
 				<%--@elvariable id="personnelModel" type="com"--%>
 				<f:form action="${pageContext.request.contextPath}/admin/${action}"
 					method="POST" modelAttribute="personnelModel">
+					<f:input path="idPersonnel" type="hidden" />
 
 					<div class="row">
-						<f:input path="idPersonnel" type="hidden" />
 						<div class="col">
 							<label>First Name</label>
 							<f:input path="prenom" type="text" class="form-control"
@@ -188,19 +188,6 @@
 						<th scope="col">Type</th>
 					</tr>
 				</thead>
-<%--				<c:forEach items="${personnelList}" var="p">
-						<tr>
-							<td><c:out value="${p.prenom}" /></td>
-							<td><c:out value="${p.nom}" /></td>
-							<td><c:out value="${p.type}" /></td>
-							<td>
-								<ul>
-									<li><a href="deletePersonnel/${p.idPersonnel}">Delete</a></li>
-									<li><a href="updatePersonnel/${p.idPersonnel}">Update</a></li>
-								</ul>
-							</td>
-						</tr>
-					</c:forEach>--%>
 				<c:forEach items="${groupeList}" var="g">
 					<tr>
 						<td><c:out value="${g.nomGroupe}" /></td>
@@ -241,9 +228,6 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</div>
-		<div>Spring Web App by Tarik BOUDAA, National School of Applied
-			Science Al Hoceima
 		</div>
 	</div>
 	<!-- Initialize the plugin: -->

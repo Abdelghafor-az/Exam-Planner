@@ -148,16 +148,16 @@ public class Examen {
         this.dureeReelle = dureeReelle;
     }
 
-    public String getAnneUniversitaire() {
-        return AnneUniversitaire;
-    }
-
     public List<Reservation> getReservations() {
         return reservations;
     }
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public String getAnneUniversitaire() {
+        return AnneUniversitaire;
     }
 
     public void setAnneUniversitaire(String anneUniversitaire) {

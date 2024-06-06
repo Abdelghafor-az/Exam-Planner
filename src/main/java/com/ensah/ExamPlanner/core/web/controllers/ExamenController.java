@@ -1,4 +1,4 @@
-package com.ensah.ExamPlanner.core.web;
+package com.ensah.ExamPlanner.core.web.controllers;
 
 import com.ensah.ExamPlanner.core.bo.*;
 import com.ensah.ExamPlanner.core.services.IElementPedagogiqueService;
@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -123,9 +122,23 @@ public class ExamenController {
 		examen.setDureePrevue(DurationUtil.convertToDuration(examenModel.getDureePrevue()));
 		examenService.updateExamen(examen);
 
+		// Prepare a form for each salle
+		int nombreSalle = examenModel.getNombreSalle();
+		List<ReservationModel> reservationModels = new ArrayList<>(nombreSalle);
+		for (int i = 0; i < nombreSalle; i++) {
+			reservationModels.add(new ReservationModel());
+		}
+		examenModel.setReservations(reservationModels);
+
+		List<Salle> availableSalles = reservationService.getAvailableSalles(
+				examen.getDateExamen(),
+				examen.getHeureExamen(),
+				examen.getHeureExamen().plus(examen.getDureePrevue())
+		);
 		// TODO: you may need to set examen stage value for displaying purposes
-		model.addAttribute("examenModel", examenModel);
 		model.addAttribute("action", "addExamenStage3");
+		model.addAttribute("examModel", examenModel);
+		model.addAttribute("availableSalles", availableSalles);
 		model.addAttribute("showSurveillanceForm", true);
 		model.addAttribute("infoMsg", "Examen en phase 2");
 
@@ -149,33 +162,44 @@ public class ExamenController {
 		LocalTime heureDebut = examen.getHeureExamen();
 		LocalTime heureFin = heureDebut.plus(examen.getDureePrevue());
 
-		// Prepare a form for each salle
-		int nombreSalle = examenModel.getNombreSalle();
-		List<ReservationModel> reservationModels = new ArrayList<>(nombreSalle);
-		for (int i = 0; i < nombreSalle; i++) {
-			reservationModels.add(new ReservationModel());
-		}
-		model.addAttribute("reservationList", reservationModels);
-		System.out.println(reservationModels.get(0).getNomSalle());
-		System.out.println(reservationModels.get(2).getNombreSurveillants());
-
-		// Create Reservations
-		List<Reservation> reservations = new ArrayList<>(nombreSalle);
 		List<Enseignant> surveillants = reservationService.getAvailableSupervisors(date, heureDebut, heureFin);
 		List<Administrateur> administrateurs = reservationService.getAvailableAdmins(date, heureDebut, heureFin);
+		List<ReservationModel> reservationModels = examenModel.getReservations();
+		int requiredSurveillantsCount = 0;
+		int requiredControleursCount = reservationModels.toArray().length;
+		assert reservationModels != null;
+		for (ReservationModel rvm: reservationModels) {
+			requiredSurveillantsCount += rvm.getNombreSurveillants();
+		}
+
+		int existingSurveillantsCount = surveillants.toArray().length;
+		int existingControleursCount = surveillants.toArray().length;
+
+		if (existingSurveillantsCount < requiredSurveillantsCount) {
+			examenService.deleteExamen(examen.getIdExamen());
+			model.addAttribute("message", "Insufficient Supervisors");
+			return "error";
+		}
+		if (existingControleursCount < requiredControleursCount) {
+			examenService.deleteExamen(examen.getIdExamen());
+			model.addAttribute("message", "Insufficient Controllers");
+			return "error";
+		}
 
 		// Pop items from an appropriate data structure
 		Queue<Enseignant> surveillantsQueue = new LinkedList<>(surveillants);
 		Queue<Administrateur> controleursQueue = new LinkedList<>(administrateurs);
 
-		for (ReservationModel rvm: reservationModels) {
+		// Create Reservations
+		List<Reservation> reservations = new ArrayList<>();
+        for (ReservationModel rvm: reservationModels) {
 			Reservation reservation = new Reservation();
 			reservation.setSalle(salleService.getSalleByNomSalle(rvm.getNomSalle()));
 			reservation.setDate(date);
 			reservation.setHeureDebut(heureDebut);
 			reservation.setHeureFin(heureFin);
 
-			// Set surveillants
+			// Set Surveillants
 			int nombreSurveillants = rvm.getNombreSurveillants();
 			List<Enseignant> selectedSurveillants = new ArrayList<>();
 			for (int i = 0; i < nombreSurveillants; i++) {
@@ -190,8 +214,9 @@ public class ExamenController {
 			reservations.add(reservation);
 		}
 		examen.setReservations(reservations);
+		examenService.updateExamen(examen);
 
-		// model.addAttribute("showExamenStageX", true);
+		model.addAttribute("examenList", examenService.getAllExamens());
 		model.addAttribute("infoMsg", "Examen en phase 3");
 
 		return "admin/form-exm";
@@ -202,8 +227,8 @@ public class ExamenController {
 	public String updateExamenForm(@PathVariable("idExamen") Long idExamen, Model model) {
 		Examen examen = examenService.getExamenById(idExamen);
 		model.addAttribute("examenModel", examen);
-		model.addAttribute("action", "updateEnseignant");
-		model.addAttribute("showExamenForm", true);
+		model.addAttribute("action", "updateExamen");
+		model.addAttribute("showUpdateExamenForm", true);
 		model.addAttribute("examenList", examenService.getAllExamens());
 
 		return "admin/form-exm";
@@ -221,6 +246,7 @@ public class ExamenController {
 			examen.setDureeReelle(DurationUtil.convertToDuration(examenModel.getDureeReelle()));
 			examen.setPv(examenModel.getPv());
 			examen.setRapport(examenModel.getRapport());
+			examen.setEpreuve(examenModel.getEpreuve());
 			examenService.updateExamen(examen);
 			model.addAttribute("infoMsg", "Examen modifié avec succès");
 		}

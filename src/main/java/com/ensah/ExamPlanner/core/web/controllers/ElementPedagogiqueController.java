@@ -1,4 +1,4 @@
-package com.ensah.ExamPlanner.core.web;
+package com.ensah.ExamPlanner.core.web.controllers;
 
 import com.ensah.ExamPlanner.core.bo.ElementPedagogique;
 import com.ensah.ExamPlanner.core.services.*;
