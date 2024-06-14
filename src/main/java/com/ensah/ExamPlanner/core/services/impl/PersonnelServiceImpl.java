@@ -1,6 +1,10 @@
 package com.ensah.ExamPlanner.core.services.impl;
 
+import com.ensah.ExamPlanner.core.bo.Departement;
+import com.ensah.ExamPlanner.core.bo.Filiere;
 import com.ensah.ExamPlanner.core.bo.Personnel;
+import com.ensah.ExamPlanner.core.dao.IDepartementRepository;
+import com.ensah.ExamPlanner.core.dao.IFiliereRepository;
 import com.ensah.ExamPlanner.core.dao.IPersonnelRepository;
 import com.ensah.ExamPlanner.core.services.IPersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;

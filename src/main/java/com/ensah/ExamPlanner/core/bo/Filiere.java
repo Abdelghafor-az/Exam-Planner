@@ -16,6 +16,7 @@ public class Filiere {
     @Column(unique = true, nullable = false)
     private String nomFiliere;
 
+//    @ManyToMany(mappedBy = "filieres")
     @OneToMany(mappedBy = "filiere")
     private List<Enseignant> enseignants;
 
@@ -27,11 +28,11 @@ public class Filiere {
         this.idFiliere = idFiliere;
     }
 
-    public String getNombreFiliere() {
+    public String getNomFiliere() {
         return nomFiliere;
     }
 
-    public void setNombreFiliere(String nombreFiliere) {
+    public void setNomFiliere(String nombreFiliere) {
         this.nomFiliere = nombreFiliere;
     }
 

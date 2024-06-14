@@ -121,7 +121,7 @@
 						</div>
 
 						<c:if test="${action=='addPersonnel'}">
-							<div class="col">
+							<div class="col" id="personnelRole">
 								<label>Role</label>
 								<f:select path="type" class="form-control" placeholder="Role">
 									<f:option value="Enseignant">Enseignant</f:option>
@@ -131,6 +131,28 @@
 							</div>
 						</c:if>
 					</div>
+
+<%--					<div class="row" id="enseignantInfo">--%>
+<%--						<div class="col">--%>
+<%--							<label>Departement</label>--%>
+<%--							<f:select path="departement" class="form-control" placeholder="Departement">--%>
+<%--								<c:forEach items="${departementList}" var="dep">--%>
+<%--									<f:option value="${dep.idDepartement}">${dep.nomDepartement}</f:option>--%>
+<%--								</c:forEach>--%>
+<%--							</f:select>--%>
+<%--							<f:errors path="departement" class="text-danger" />--%>
+<%--						</div>--%>
+
+<%--						<div class="col">--%>
+<%--							<label>Filiere</label>--%>
+<%--							<f:select path="filiere" class="form-control" placeholder="Filiere">--%>
+<%--								<c:forEach items="${filiereList}" var="f">--%>
+<%--									<f:option value="${f.idFiliere}">${f.nomFiliere}</f:option>--%>
+<%--								</c:forEach>--%>
+<%--							</f:select>--%>
+<%--							<f:errors path="filiere" class="text-danger" />--%>
+<%--						</div>--%>
+<%--					</div>--%>
 
 					<div class="text-right mt-3">
 						<button type="submit" class="btn btn-primary">Send</button>
@@ -195,8 +217,8 @@
 						<td><c:out value="Groupe" /></td>
 						<td>
 							<ul>
-								<li><a href="deleteGroupe/${g.idGroupe}">Delete</a></li>
-								<li><a href="updateGroupe/${g.idGroupe}">Update</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/deleteGroupe/${g.idGroupe}">Delete</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/updateGroupe/${g.idGroupe}">Update</a></li>
 							</ul>
 						</td>
 					</tr>
@@ -235,6 +257,15 @@
 		$(document).ready(function() {
 			$('#example-multiple-selected').multiselect();
 		});
+	</script>
+	<script>
+		const selectRole = document.getElementById("personnelRole").value;
+		selectRole.addEventListener('change', () => {
+			if (selectRole === "Enseignant")
+				document.getElementById("enseignantInfo").style.display = "";
+			else
+				document.getElementById("enseignantInfo").style.display = "none";
+		})
 	</script>
 </body>
 </html>

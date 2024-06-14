@@ -1,9 +1,7 @@
 package com.ensah.ExamPlanner.core.web.controllers;
 
-import com.ensah.ExamPlanner.core.bo.Administrateur;
-import com.ensah.ExamPlanner.core.bo.Enseignant;
-import com.ensah.ExamPlanner.core.bo.Groupe;
-import com.ensah.ExamPlanner.core.bo.Personnel;
+import com.ensah.ExamPlanner.core.bo.*;
+import com.ensah.ExamPlanner.core.dao.IDepartementRepository;
 import com.ensah.ExamPlanner.core.services.*;
 import com.ensah.ExamPlanner.core.web.models.GroupeModel;
 import com.ensah.ExamPlanner.core.web.models.PersonnelModel;
@@ -33,9 +31,6 @@ public class PersonnelController {
 	@Autowired
 	private IGroupeService groupeService;
 
-	@Autowired
-	IFiliereService filiereService;
-
 	@ModelAttribute
 	public void init(Model model) {
 		model.addAttribute("/showForm", false);
@@ -46,19 +41,19 @@ public class PersonnelController {
 	public String showForm(Model model) {
 		model.addAttribute("action", "addPersonnel");
 		model.addAttribute("personnelModel", new PersonnelModel());
-		model.addAttribute("filiereList", filiereService.getAllFilieres());
+//		model.addAttribute("departementList", enseignantService.getAllDepartements());
+//		model.addAttribute("filiereList", enseignantService.getAllFilieres());
 		model.addAttribute("showForm", true);
-		// model.addAttribute("showGroupeForm", true);
-		initializeLists(model);
+		model.addAttribute("enseignantList", enseignantService.getAllEnseignants());
+		model.addAttribute("administrateurList", administrateurService.getAllAdministrateurs());
 
 		return "admin/form";
 	}
 
 	// TODO: here also, use only addPersonnel methode and pass the type, the infoMsg attribute value can be parameterized.
 	@PostMapping("/addPersonnel")
-	public String addPersonnel(@Valid @ModelAttribute("personnelModel") PersonnelModel personnelModel, BindingResult bindingResult,
-			Model model) {
-
+	public String addPersonnel(@Valid @ModelAttribute("personnelModel") PersonnelModel personnelModel,
+							   BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("showForm", true);
 			model.addAttribute("errorMsg", "Les données sont invalides.");
@@ -160,13 +155,10 @@ public class PersonnelController {
 	public String showGroupeForm(Model model) {
 		model.addAttribute("action", "addGroupe");
 		model.addAttribute("groupeModel", new GroupeModel());
-		// model.addAttribute("showForm", false);
 		model.addAttribute("showGroupeForm", true);
-		// TODO: let those clever things after exam management
-		// if i want to see only groupes on the 'addGroupe' endpoint
-		// model.addAttribute("groupeList", groupeService.getAllGroupes());
 
-		initializeLists(model);
+		model.addAttribute("enseignantList", enseignantService.getAllEnseignants());
+		model.addAttribute("groupeList", groupeService.getAllGroupes());
 
 		return "admin/form";
 	}

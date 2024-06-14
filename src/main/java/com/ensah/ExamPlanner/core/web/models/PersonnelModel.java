@@ -1,6 +1,8 @@
 package com.ensah.ExamPlanner.core.web.models;
 
 
+import com.ensah.ExamPlanner.core.bo.Departement;
+import com.ensah.ExamPlanner.core.bo.Filiere;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -18,9 +20,9 @@ public class PersonnelModel {
             message = "accept only 'Enseignant' or 'Administrateur' roles.")
     private String type;
 
-    private String departement;
+    private Departement departement;
 
-    private Long filiere;
+    private Filiere filiere;
 
     public PersonnelModel() {}
 
@@ -61,5 +63,21 @@ public class PersonnelModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public Filiere getFiliere() {
+        return filiere;
+    }
+
+    public void setFiliere(Filiere filiere) {
+        this.filiere = filiere;
     }
 }

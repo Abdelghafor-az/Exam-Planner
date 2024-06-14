@@ -21,7 +21,7 @@ INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom, id_filiere, id_departement) 
 ('E', 'Khamjane', 'Abdelaziz', 18, 1),
 ('E', 'Boudaa', 'Tarik', 19, 1),
 ('E', 'Elhaddai', 'Anass', 20, 1),
-('E', 'Dynamo', 'Hamza', 5, 1);
+('E', 'Dynamo', 'Hamza', 5, 1),
 ('E', 'Ziad', 'Amine', 6, 2);
 INSERT INTO personnel (PERSONNEL_TYPE, nom, prenom) VALUES
 ('A', 'Alaoui', 'Taha'),

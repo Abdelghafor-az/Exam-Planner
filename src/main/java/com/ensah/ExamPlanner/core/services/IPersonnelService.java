@@ -1,5 +1,7 @@
 package com.ensah.ExamPlanner.core.services;
 
+import com.ensah.ExamPlanner.core.bo.Departement;
+import com.ensah.ExamPlanner.core.bo.Filiere;
 import com.ensah.ExamPlanner.core.bo.Personnel;
 
 import java.util.List;
